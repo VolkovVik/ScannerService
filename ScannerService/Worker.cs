@@ -9,7 +9,7 @@ using Serilog;
 namespace ScannerService {
     class Worker
     {
-        private const string TestNamePort = "COM7";
+        private const string TestNamePort = "COM10";
         private const string TerminalTopic = "terminal";
         private const string ScannerTopic = "scanner";
         private const int Delay = 1000;
