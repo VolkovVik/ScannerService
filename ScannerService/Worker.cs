@@ -8,7 +8,9 @@ namespace ScannerService {
         private PortRs232 _scannerPort;
         private MyMqttClient _mqttClient;
         private const string ScannerTopic = "scanner";
-        
+        private const string NewScannerTopic = "newscan";
+        private int _flag = 0;
+
         private bool _isExit;
 
         public async Task Start()
@@ -74,7 +76,12 @@ namespace ScannerService {
 
         private void _mqttClient_Message(string content) => Log.Information($"{content}");
 
-        private async void ScannerPort_Notify(string message) =>
+        private async void ScannerPort_Notify(string message)
+        {
             await _mqttClient.PublishingAsync(ScannerTopic, message);
+            await Task.Delay(TimeSpan.FromSeconds(.5));
+            await _mqttClient.PublishingAsync(NewScannerTopic, _flag.ToString());
+            _flag = _flag == 0 ? 1 : 0;
+        }
     }
 }
