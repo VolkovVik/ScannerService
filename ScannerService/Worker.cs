@@ -79,7 +79,7 @@ namespace ScannerService {
         private async void ScannerPort_Notify(string message)
         {
             await _mqttClient.PublishingAsync(ScannerTopic, message);
-            await Task.Delay(TimeSpan.FromSeconds(.5));
+            //await Task.Delay(TimeSpan.FromSeconds(.5));
             await _mqttClient.PublishingAsync(NewScannerTopic, _flag.ToString());
             _flag = _flag == 0 ? 1 : 0;
         }
